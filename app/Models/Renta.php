@@ -13,6 +13,7 @@ class Renta extends Model
         'libro_id',
         'fecha_renta',
         'fecha_devolucion',
+        'estado',
     ];
 
     public function usuario()
