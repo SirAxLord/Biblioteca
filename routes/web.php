@@ -23,3 +23,6 @@ Route::delete('/libros/eliminar/{id}', [libroController::class, 'eliminarLibro']
 
 Route::get('/prestamos', [RentaController::class, 'mostrarVista'])->name('prestamos.vista');
 Route::post('/prestamos/registrar', [RentaController::class, 'registrarPrestamo'])->name('prestamos.registrar');
+
+Route::get('/devoluciones', [RentaController::class, 'mostrarDevoluciones'])->name('devoluciones.vista');
+Route::put('/devoluciones/{id}', [RentaController::class, 'marcarDevuelto'])->name('devoluciones.marcar');

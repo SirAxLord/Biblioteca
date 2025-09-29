@@ -2,10 +2,22 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Registrar Préstamo</title>
+    <title>Libreria - Préstamos</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 p-6">
+<body class="bg-gray-100">
+    <nav class="bg-blue-600 py-4 text-white">
+        <div class="container mx-auto flex justify-between items-center px-4">
+            <a href="{{ route('home') }}" class="text-2xl font-bold">Librería</a>
+            <div>
+                <a href="{{ route('usuarios.vista') }}" class="mr-4 hover:underline">Usuarios</a>
+                <a href="{{ route('libros.vista') }}" class="mr-4 hover:underline">Libros</a>
+                <a href="{{ route('prestamos.vista')}}" class="mr-4 hover:underline">Prestamos</a>
+                <a href="{{ route('devoluciones.vista')}}" class="mr-4 hover:underline">Devolucion</a>
+            </div>
+        </div>
+    </nav>
+
     <h1 class="text-3xl font-bold text-center mb-6">Registrar Préstamo</h1>
 
     @if(session('success'))
