@@ -68,5 +68,19 @@ class libroController extends Controller
         $libro->delete();
         return redirect()->route('libros.vista')->with('success', 'Libro eliminado exitosamente'); 
     }
+
+    public function buscarLibro(Request $request)
+    {
+        $titulo = $request->input('titulo');
+
+        $libro = Libros::where('nombre', 'like', "%$titulo%")->first();
+
+        if ($libro) {
+            return redirect()->route('home')->with('libro', $libro);
+        } else {
+            return redirect()->route('home')->with('no_encontrado', 'El libro no existe en la base de datos.');
+        }
+    }
 }
+
 

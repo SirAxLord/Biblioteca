@@ -6,7 +6,9 @@ use App\Http\Controllers\libroController;
 
 Route::get('/', function () {
     return view('home');
-});
+})->name('home');
+
+Route::get('/buscar-libro', [LibroController::class, 'buscarLibro'])->name('libros.buscar');
 
 Route::get('/usuarios', [usuarioController::class, 'mostrarVista'])->name('usuarios.vista');
 Route::post('/usuarios/crear', [usuarioController::class, 'crearUsuario'])->name('usuarios.crear');
