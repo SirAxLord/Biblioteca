@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\usuarioController;
 use App\Http\Controllers\libroController;
+use App\Http\Controllers\RentaController;
 
 Route::get('/', function () {
     return view('home');
@@ -20,3 +21,5 @@ Route::post('/libros/crear', [libroController::class, 'crearLibro'])->name('libr
 Route::put('/libros/actualizar/{id}', [libroController::class, 'actualizarLibro'])->name('libros.actualizar');
 Route::delete('/libros/eliminar/{id}', [libroController::class, 'eliminarLibro'])->name('libros.eliminar');
 
+Route::get('/prestamos', [RentaController::class, 'mostrarVista'])->name('prestamos.vista');
+Route::post('/prestamos/registrar', [RentaController::class, 'registrarPrestamo'])->name('prestamos.registrar');
