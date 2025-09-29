@@ -13,4 +13,9 @@ class Libros extends Model
         'ISBN',
         'autor',
     ];
+
+    public function rentas()
+    {
+        return $this->hasMany(Renta::class, 'libro_id');
+    }
 }

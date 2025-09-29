@@ -30,20 +30,6 @@ class usuarioController extends Controller
 
         return redirect()->route('usuarios.vista')->with('success', 'Usuario creado exitosamente');
     }
-
-    public function obtenerUsuarios()
-    {
-        $usuarios = Usuario::all();
-    }
-
-    public function obtenerUsuario($id)
-    {
-        $usuario = Usuario::find($id);
-        if (!$usuario) {
-            return response()->json(['message' => 'Usuario no encontrado'], 404);
-        }
-    }
-
     public function actualizarUsuario(Request $request, $id)
     {
         $usuario = Usuario::find($id);
@@ -69,6 +55,7 @@ class usuarioController extends Controller
             $usuario->direccion = $validatedData['direccion'];
         }
         $usuario->save();
+        return redirect()->route('usuarios.vista')->with('success', 'Usuario actualizado exitosamente');
     }
 
     public function eliminarUsuario($id)
@@ -78,6 +65,6 @@ class usuarioController extends Controller
             return response()->json(['message' => 'Usuario no encontrado'], 404);
         }
         $usuario->delete();
-                return redirect()->route('usuarios.vista')->with('success', 'Usuario eliminado exitosamente');
+        return redirect()->route('usuarios.vista')->with('success', 'Usuario eliminado exitosamente');
     }
 }

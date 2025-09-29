@@ -13,4 +13,10 @@ class Usuario extends Model
         'telefono',
         'direccion',
     ];
+
+    public function rentas()
+    {
+        return $this->hasMany(Renta::class);
+    }
 }
+

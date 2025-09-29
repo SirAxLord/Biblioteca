@@ -12,8 +12,8 @@
         <div class="container mx-auto flex justify-between items-center">
             <a href="#" class="text-2xl font-bold">Librería</a>
             <div>
-                <a href="#" class="mr-4 hover:underline">Usuarios</a>
-                <a href="#" class="mr-4 hover:underline">Libros</a>
+                <a href="{{ route('usuarios.vista') }}" class="mr-4 hover:underline">Usuarios</a>
+                <a href="{{ route('libros.vista') }}" class="mr-4 hover:underline">Libros</a>
                 <a href="#" class="mr-4 hover:underline">Prestamos</a>
                 <a href="#" class="mr-4 hover:underline">Devolucion</a>
             </div>

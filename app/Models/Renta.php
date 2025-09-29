@@ -14,4 +14,14 @@ class Renta extends Model
         'fecha_renta',
         'fecha_devolucion',
     ];
+
+    public function usuario()
+    {
+        return $this->belongsTo(Usuario::class);
+    }
+
+    public function libro()
+    {
+        return $this->belongsTo(Libros::class, 'libro_id');
+    }
 }
