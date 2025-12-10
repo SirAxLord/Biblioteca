@@ -1,3 +1,125 @@
+# Biblioteca (Laravel)
+
+Aplicación web sencilla para gestionar una biblioteca: usuarios, libros, préstamos y devoluciones. Construida con Laravel 12, TailwindCSS y Vite.
+
+## Requisitos
+- PHP `^8.2`
+- Composer
+- Node.js `>=18`
+- Extensiones de PHP recomendadas por Laravel (pdo, mbstring, openssl, etc.)
+- Base de datos (MySQL/PostgreSQL) o SQLite
+
+## Configuración rápida
+1. Instalar dependencias de PHP y JS:
+   ```powershell
+   composer install
+   npm install
+   ```
+2. Copiar y configurar `.env`:
+   ```powershell
+   copy .env.example .env
+   ```
+   - Ajusta `APP_KEY`, `DB_CONNECTION`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`.
+   - Para SQLite, crea `database\database.sqlite` y usa `DB_CONNECTION=sqlite`.
+3. Generar clave y ejecutar migraciones:
+   ```powershell
+   php artisan key:generate
+   php artisan migrate
+   ```
+4. Levantar el servidor de desarrollo:
+   ```powershell
+   php artisan serve
+   npm run dev
+   ```
+   - Alternativa integrada (si tienes `npx`):
+     ```powershell
+     composer run dev
+     ```
+
+## Estructura principal
+- `routes/web.php`: rutas HTTP para vistas y acciones CRUD.
+- `app/Http/Controllers/`: lógica de controladores (`usuarioController`, `libroController`, `RentaController`).
+- `app/Models/`: modelos Eloquent (`Usuario`, `Libros`, `Renta`).
+- `database/migrations/`: tablas de usuarios, libros y rentas.
+- `resources/views/`: vistas Blade con Tailwind (`home`, `indexUsuario`, `indexLibros`, `indexPrestamos`, `indexDevolucion`).
+
+## Funcionalidades
+- Usuarios
+  - Crear, listar, editar, eliminar.
+- Libros
+  - Crear, listar, editar, eliminar.
+  - Buscar por título desde `home`.
+- Préstamos
+  - Registrar préstamo seleccionando usuario y libro.
+- Devoluciones
+  - Listar rentas y marcar como devuelto.
+
+## Rutas principales
+- `GET /` → `home` (búsqueda de libros).
+- Usuarios:
+  - `GET /usuarios` → vista listado/crear.
+  - `POST /usuarios/crear`
+  - `PUT /usuarios/actualizar/{id}`
+  - `DELETE /usuarios/eliminar/{id}`
+- Libros:
+  - `GET /libros` → vista listado/crear.
+  - `POST /libros/crear`
+  - `PUT /libros/actualizar/{id}`
+  - `DELETE /libros/eliminar/{id}`
+  - `GET /buscar-libro?titulo=...` → búsqueda y feedback en `home`.
+- Préstamos:
+  - `GET /prestamos` → formulario registrar.
+  - `POST /prestamos/registrar`
+- Devoluciones:
+  - `GET /devoluciones` → listado de rentas.
+  - `PUT /devoluciones/{id}` → marcar devuelto.
+
+## Modelos y relaciones
+- `Usuario`
+  - Tabla: `usuarios`
+  - Fillable: `nombre`, `telefono`, `direccion`
+  - Relación: `hasMany(Renta)`
+- `Libros`
+  - Tabla: `libros`
+  - Fillable: `nombre`, `ISBN`, `autor`
+  - Relación: `hasMany(Renta, 'libro_id')`
+- `Renta`
+  - Tabla: `rentas`
+  - Fillable: `usuario_id`, `libro_id`, `fecha_renta`, `fecha_devolucion`, `estado`
+  - Relaciones: `belongsTo(Usuario)`, `belongsTo(Libros, 'libro_id')`
+
+## Migraciones
+- `usuarios`: `id`, timestamps, `nombre` (string), `telefono` (unsigned big integer), `direccion` (string).
+- `libros`: `id`, timestamps, `nombre` (string), `ISBN` (string, nullable), `autor` (string).
+- `rentas`: `id`, timestamps, `usuario_id` (FK `usuarios`), `libro_id` (FK `libros`), `fecha_renta` (date), `fecha_devolucion` (date, nullable), `estado` (string, default `prestado`).
+
+## Vistas
+- `home.blade.php`: navegación y formulario de búsqueda; muestra resultado del libro si existe.
+- `indexUsuario.blade.php`: CRUD de usuarios con formularios y tabla.
+- `indexLibros.blade.php`: CRUD de libros y edición inline.
+- `indexPrestamos.blade.php`: formulario para registrar préstamo.
+- `indexDevolucion.blade.php`: tabla de rentas y acción de devolución.
+
+## Desarrollo Frontend
+- Vite (`vite.config.js`) y TailwindCSS via CDN en vistas.
+- `npm run dev` inicia Vite; `npm run build` compila assets.
+
+## Pruebas
+- Ejecutar tests:
+  ```powershell
+  php artisan test
+  ```
+
+## Notas y posibles mejoras
+- Campo `ISBN`:
+  - Migración y vistas usan `ISBN` (mayúsculas), pero en `libroController` se valida `isbn` y la regla `unique:libros,isbn`. Recomendada alineación:
+    - Cambiar a `ISBN` en validación/reglas, o renombrar columna a `isbn` en migración/modelo.
+- `Renta::belongsTo(Usuario)` usa clave foránea por convención (`usuario_id`); puede explicitar `belongsTo(Usuario::class, 'usuario_id')` para claridad.
+- Manejo de errores/respuestas: actualmente se redirige con flash messages; puede añadirse API JSON.
+- Validaciones adicionales: evitar préstamo de libro con `estado` prestado, etc.
+
+## Licencia
+MIT (según `composer.json`).
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
