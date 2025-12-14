@@ -17,14 +17,14 @@ class libroController extends Controller
         // Validar los datos recibidos
         $validatedData = $request->validate([
             'nombre' => 'required|string|max:255',
-            'isbn' => 'required|string|max:255|unique:libros,isbn',
+            'ISBN' => 'required|string|max:255|unique:libros,ISBN',
             'autor' => 'required|string|max:255',
         ]);
 
         // Crear un nuevo libro en la base de datos
         $libro = new Libros();
         $libro->nombre = $validatedData['nombre'];
-        $libro->isbn = $validatedData['isbn'];
+        $libro->ISBN = $validatedData['ISBN'];
         $libro->autor = $validatedData['autor'];
         $libro->save();
 
@@ -41,7 +41,7 @@ class libroController extends Controller
         // Validar los datos recibidos
         $validatedData = $request->validate([
             'nombre' => 'sometimes|required|string|max:255',
-            'isbn' => 'sometimes|required|string|max:255|unique:libros,isbn,' . $id,
+            'ISBN' => 'sometimes|required|string|max:255|unique:libros,ISBN,' . $id,
             'autor' => 'sometimes|required|string|max:255',
         ]);
 
@@ -49,8 +49,8 @@ class libroController extends Controller
         if (isset($validatedData['nombre'])) {
             $libro->nombre = $validatedData['nombre'];
         }
-        if (isset($validatedData['isbn'])) {
-            $libro->isbn = $validatedData['isbn'];
+        if (isset($validatedData['ISBN'])) {
+            $libro->ISBN = $validatedData['ISBN'];
         }
         if (isset($validatedData['autor'])) {
             $libro->autor = $validatedData['autor'];

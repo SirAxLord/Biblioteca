@@ -18,7 +18,7 @@ class Renta extends Model
 
     public function usuario()
     {
-        return $this->belongsTo(Usuario::class, );
+        return $this->belongsTo(Usuario::class, 'usuario_id');
     }
 
     public function libro()
